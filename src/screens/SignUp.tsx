@@ -37,7 +37,7 @@ export function SignUp() {
 
   const toast = useToast();
   const { singIn } = useAuth();
-  
+
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema),
   });
@@ -71,15 +71,14 @@ export function SignUp() {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-        <VStack flex={1} px={10} pb={16}>
-        <Image 
+      <VStack>
+        <Image
           source={BackgroundImg}
           defaultSource={BackgroundImg}
           alt="Pessoas treinando"
           resizeMode="contain"
           position="absolute"
         />
-
         <Center my={24}>
           <LogoSvg />
 
@@ -88,16 +87,16 @@ export function SignUp() {
           </Text>
         </Center>
 
-        <Center>
+        <Center px={10}>
           <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
             Crie sua conta
           </Heading>
 
-          <Controller 
+          <Controller
             control={control}
             name="name"
             render={({ field: { onChange, value } }) => (
-              <Input 
+              <Input
                 placeholder="Nome"
                 onChangeText={onChange}
                 value={value}
@@ -106,12 +105,12 @@ export function SignUp() {
             )}
           />
 
-          <Controller 
+          <Controller
             control={control}
             name="email"
             render={({ field: { onChange, value } }) => (
-              <Input 
-                placeholder="E-mail" 
+              <Input
+                placeholder="E-mail"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 onChangeText={onChange}
@@ -120,13 +119,13 @@ export function SignUp() {
               />
             )}
           />
-          
-          <Controller 
+
+          <Controller
             control={control}
             name="password"
             render={({ field: { onChange, value } }) => (
-              <Input 
-                placeholder="Senha" 
+              <Input
+                placeholder="Senha"
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
@@ -135,12 +134,12 @@ export function SignUp() {
             )}
           />
 
-          <Controller 
+          <Controller
             control={control}
             name="password_confirm"
             render={({ field: { onChange, value } }) => (
-              <Input 
-                placeholder="Confirmar a Senha" 
+              <Input
+                placeholder="Confirmar a Senha"
                 secureTextEntry
                 onChangeText={onChange}
                 value={value}
@@ -151,19 +150,20 @@ export function SignUp() {
             )}
           />
 
-          <Button 
-            title="Criar e acessar" 
+          <Button
+            title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
             isLoading={isLoading}
           />
+          <Button
+            title="Voltar para o login"
+            variant="outline"
+            mt={12}
+            onPress={handleGoBack}
+          />
         </Center>
-        
-        <Button 
-          title="Voltar para o login" 
-          variant="outline" 
-          mt={12}
-          onPress={handleGoBack}
-        />
+
+
       </VStack>
     </ScrollView>
   );

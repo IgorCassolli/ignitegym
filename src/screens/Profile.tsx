@@ -43,7 +43,7 @@ const profileSchema = yup.object({
     .transform((value) => !!value ? value : null)
     .oneOf([yup.ref('password'), null], 'A confirmação de senha não confere.')
     .when('password', {
-      is: (Field: any) => Field, 
+      is: (Field: any) => Field,
       then: yup
         .string()
         .nullable()
@@ -55,21 +55,21 @@ const profileSchema = yup.object({
 export function Profile() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
-  const [userPhoto, setUserPhoto] = useState('https://github.com/rodrigorgtic.png');
+  const [userPhoto, setUserPhoto] = useState('https://github.com/IgorCassolli.png');
 
   const toast = useToast();
   const { user, updateUserProfile } = useAuth();
-  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({ 
-    defaultValues: { 
+  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+    defaultValues: {
       name: user.name,
       email: user.email
     },
-    resolver: yupResolver(profileSchema) 
+    resolver: yupResolver(profileSchema)
   });
 
-  async function handleUserPhotoSelected(){
+  async function handleUserPhotoSelected() {
     setPhotoIsLoading(true);
-    
+
     try {
       const photoSelected = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -77,17 +77,17 @@ export function Profile() {
         aspect: [4, 4],
         allowsEditing: true,
       });
-  
-      if(photoSelected.cancelled) {
+
+      if (photoSelected.cancelled) {
         return;
       }
 
-      if(photoSelected.uri) {
+      if (photoSelected.uri) {
 
         const photoInfo = await FileSystem.getInfoAsync(photoSelected.uri);
-        
-        if(photoInfo.size && (photoInfo.size  / 1024 / 1024 ) > 2){
-          
+
+        if (photoInfo.size && (photoInfo.size / 1024 / 1024) > 2) {
+
           return toast.show({
             title: 'Essa imagem é muito grande. Escolha uma de até 5MB.',
             placement: 'top',
@@ -105,7 +105,7 @@ export function Profile() {
 
         console.log(photoFile);
       }
-  
+
     } catch (error) {
       console.log(error)
     } finally {
@@ -142,7 +142,7 @@ export function Profile() {
       setIsUpdating(false);
     }
   }
- 
+
   return (
     <VStack flex={1}>
       <ScreenHeader title='Perfil' />
@@ -151,33 +151,33 @@ export function Profile() {
         <Center mt={6} px={10}>
           {
             photoIsLoading ?
-              <Skeleton 
+              <Skeleton
                 w={PHOTO_SIZE}
                 h={PHOTO_SIZE}
                 rounded="full"
                 startColor="gray.500"
                 endColor="gray.400"
               />
-            :
-              <UserPhoto 
+              :
+              <UserPhoto
                 source={{ uri: userPhoto }}
                 alt="Foto do usuário"
                 size={PHOTO_SIZE}
               />
           }
-          
+
           <TouchableOpacity onPress={handleUserPhotoSelected}>
             <Text color="green.500" fontWeight="bold" fontSize="md" mt={2} mb={8}>
               Alterar Foto
             </Text>
           </TouchableOpacity>
 
-          <Controller 
+          <Controller
             control={control}
             name="name"
             render={({ field: { value, onChange } }) => (
-              <Input 
-                bg="gray.600" 
+              <Input
+                bg="gray.600"
                 placeholder='Nome'
                 onChangeText={onChange}
                 value={value}
@@ -186,12 +186,12 @@ export function Profile() {
             )}
           />
 
-          <Controller 
+          <Controller
             control={control}
             name="email"
             render={({ field: { value, onChange } }) => (
-              <Input 
-                bg="gray.600" 
+              <Input
+                bg="gray.600"
                 placeholder="E-mail"
                 isDisabled
                 onChangeText={onChange}
@@ -200,17 +200,17 @@ export function Profile() {
             )}
           />
 
-          
-        
+
+
           <Heading color="gray.200" fontSize="md" mb={2} alignSelf="flex-start" mt={12} fontFamily="heading">
             Alterar senha
           </Heading>
 
-          <Controller 
+          <Controller
             control={control}
             name="old_password"
             render={({ field: { onChange } }) => (
-              <Input 
+              <Input
                 bg="gray.600"
                 placeholder="Senha antiga"
                 secureTextEntry
@@ -219,11 +219,11 @@ export function Profile() {
             )}
           />
 
-          <Controller 
+          <Controller
             control={control}
             name="password"
             render={({ field: { onChange } }) => (
-              <Input 
+              <Input
                 bg="gray.600"
                 placeholder="Nova senha"
                 secureTextEntry
@@ -233,11 +233,11 @@ export function Profile() {
             )}
           />
 
-          <Controller 
+          <Controller
             control={control}
             name="confirm_password"
             render={({ field: { onChange } }) => (
-              <Input 
+              <Input
                 bg="gray.600"
                 placeholder="Confirme a nova senha"
                 secureTextEntry
@@ -247,9 +247,9 @@ export function Profile() {
             )}
           />
 
-          <Button 
-            title="Atualizar" 
-            mt={4} 
+          <Button
+            title="Atualizar"
+            mt={4}
             onPress={handleSubmit(handleProfileUpdate)}
             isLoading={isUpdating}
           />

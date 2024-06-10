@@ -53,12 +53,12 @@ export function SignIn() {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-      <VStack flex={1} px={10}>
+      <VStack>
         <Image
           source={BackgroundImg}
           defaultSource={BackgroundImg}
           alt="Pessoas treinando"
-          resizeMode="cover"
+          resizeMode="contain"
           position="absolute"
         />
 
@@ -70,7 +70,7 @@ export function SignIn() {
           </Text>
         </Center>
 
-        <Center>
+        <Center px={10}>
           <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
             Acesse a conta
           </Heading>
@@ -111,7 +111,7 @@ export function SignIn() {
           />
         </Center>
 
-        <Center mt={24}>
+        <Center mt={24} px={10}>
           <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
             Ainda não tem acesso?
           </Text>
